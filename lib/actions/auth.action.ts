@@ -1,4 +1,5 @@
 'use server';
+
  
  import {db, auth} from "@/firebase/admin";
  import {cookies} from "next/headers";
@@ -118,4 +119,14 @@ export async function isAuthenticated() {
     const user = await getCurrentUser();
 
     return !!user;
+}
+
+
+
+export async function logout() {
+  const cookieStore = cookies();
+  (await cookieStore).set('session', '', {
+    maxAge: 0,
+    path: '/',
+  });
 }
